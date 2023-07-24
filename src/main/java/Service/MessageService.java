@@ -63,4 +63,16 @@ public class MessageService {
         }
         return message;
     }
+    public Message deleteMessagebyID(int id)
+    {
+        System.out.println("testin2");
+        Message message = this.getMessagebyID(id);
+        if(message == null)
+        {
+            System.out.println("testing4");
+            return null;
+        }        
+        messageDAO.deleteMessagebyID(id);        
+        return message;
+    }
 }
