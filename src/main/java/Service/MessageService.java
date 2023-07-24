@@ -80,7 +80,7 @@ public class MessageService {
         {
             return null;
         }
-        if(message_text == "")
+        if(message_text.isBlank())
         {
             return null;
         }
