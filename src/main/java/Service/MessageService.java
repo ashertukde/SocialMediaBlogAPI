@@ -64,15 +64,32 @@ public class MessageService {
         return message;
     }
     public Message deleteMessagebyID(int id)
-    {
-        System.out.println("testin2");
+    {       
         Message message = this.getMessagebyID(id);
         if(message == null)
         {
-            System.out.println("testing4");
             return null;
         }        
         messageDAO.deleteMessagebyID(id);        
+        return message;
+    }
+    public Message updateMessagebyID(int id, String message_text)
+    {       
+        Message message = this.getMessagebyID(id);
+        if(message == null)
+        {
+            return null;
+        }
+        if(message_text == "")
+        {
+            return null;
+        }
+        if(message_text.length() >= 255)
+        {
+            return null;
+        }        
+        messageDAO.updateMessagebyID(id, message_text); 
+        message = this.getMessagebyID(id);       
         return message;
     }
 }
