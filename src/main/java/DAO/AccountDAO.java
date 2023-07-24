@@ -1,0 +1,16 @@
+package DAO;
+
+import Util.ConnectionUtil;
+import Model.Account;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class AccountDAO {
+    
+}
