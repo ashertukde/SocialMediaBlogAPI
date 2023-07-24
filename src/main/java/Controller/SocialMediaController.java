@@ -4,6 +4,9 @@ import Model.Account;
 import Model.Message;
 import Service.AccountService;
 import Service.MessageService;
+
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,8 +33,9 @@ public class SocialMediaController {
     
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-        app.get("example-endpoint", this::exampleHandler);
+        app.get("/messages", this::getMessageHandler);
         app.post("/messages", this::postMessageHandler);
+        app.get("/messages/{message_id}", this::getMessagebyIDHandler);
         return app;
     }
 
@@ -39,8 +43,25 @@ public class SocialMediaController {
      * This is an example handler for an example endpoint.
      * @param context The Javalin Context object manages information about both the HTTP request and response.
      */
-    private void exampleHandler(Context context) {
-        context.json("sample text");
+    private void getMessageHandler(Context context) {
+        List<Message> messages = messageService.getAllMessages();
+        context.json(messages);
+        context.status(200);
+    }
+    private void getMessagebyIDHandler(Context context) throws JsonMappingException, JsonProcessingException {
+        //ObjectMapper mapper = new ObjectMapper();
+        //Message message = mapper.readValue(context.body(), Message.class);
+        Message foundMessage = messageService.getMessagebyID(Integer.parseInt(context.pathParam("message_id")));
+        System.out.println((context.pathParam("message_id")));
+        if(foundMessage != null)
+        {
+            context.json(foundMessage);
+        }
+        else
+        {
+            context.json("");
+        }
+        context.status(200);
     }
     private void postMessageHandler(Context context) throws JsonMappingException, JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -48,7 +69,8 @@ public class SocialMediaController {
         Message addedMessage = messageService.addMessage(message);
         if(addedMessage!=null){
             context.status(200);
-            context.json(mapper.writeValueAsString(addedMessage));            
+            context.json(mapper.writeValueAsString(addedMessage));
+                       
         }else{
             context.status(400);
         }
