@@ -34,6 +34,7 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.post("/register", this::postUserRegisterHandler);
+        app.post("/login", this::postUserLoginHandler);
         app.get("/messages", this::getMessageHandler);
         app.post("/messages", this::postMessageHandler);
         app.get("/messages/{message_id}", this::getMessagebyIDHandler);
@@ -52,6 +53,18 @@ public class SocialMediaController {
                        
         }else{
             context.status(400);
+        }
+    }
+    private void postUserLoginHandler(Context context) throws JsonMappingException, JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(context.body(), Account.class);
+        Account foundAccount = accountService.findAccount(account);
+        if(foundAccount!=null){
+            context.status(200);
+            context.json(mapper.writeValueAsString(foundAccount));
+                       
+        }else{
+            context.status(401);
         }
     }
     private void getMessageHandler(Context context) {

@@ -36,4 +36,10 @@ public class AccountService {
         result = accountDAO.addAccount(account);
         return result;
     }
+    public Account findAccount(Account account)
+    {
+        Account result = new Account();
+        result = accountDAO.findAccount(account);
+        return result;
+    }
 }
