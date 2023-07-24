@@ -40,6 +40,7 @@ public class SocialMediaController {
         app.get("/messages/{message_id}", this::getMessagebyIDHandler);
         app.delete("/messages/{message_id}", this::deleteMessagebyIDHandler);
         app.patch("/messages/{message_id}", this::updateMessagebyIDHandler);
+        app.get("/accounts/{account_id}/messages", this::getMessagefromUserHandler);
         return app;
     }
 
@@ -124,5 +125,19 @@ public class SocialMediaController {
             context.status(400);
         }
         
+    }
+    private void getMessagefromUserHandler(Context context) throws JsonMappingException, JsonProcessingException {
+        //ObjectMapper mapper = new ObjectMapper();
+        //Message message = mapper.readValue(context.body(), Message.class);
+        List<Message> foundMessage = messageService.getMessagebyUserID(Integer.parseInt(context.pathParam("account_id")));
+        if(foundMessage != null)
+        {
+            context.json(foundMessage);
+        }
+        else
+        {
+            context.json("");
+        }
+        context.status(200);
     }
 }

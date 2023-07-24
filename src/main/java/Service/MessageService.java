@@ -92,4 +92,9 @@ public class MessageService {
         message = this.getMessagebyID(id);       
         return message;
     }
+    public List<Message> getMessagebyUserID(int id)
+    {       
+        List<Message> message = messageDAO.getMessagebyUserID(id);                
+        return message;
+    }
 }
