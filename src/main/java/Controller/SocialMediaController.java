@@ -74,8 +74,6 @@ public class SocialMediaController {
         context.status(200);
     }
     private void getMessagebyIDHandler(Context context) throws JsonMappingException, JsonProcessingException {
-        //ObjectMapper mapper = new ObjectMapper();
-        //Message message = mapper.readValue(context.body(), Message.class);
         Message foundMessage = messageService.getMessagebyID(Integer.parseInt(context.pathParam("message_id")));
         if(foundMessage != null)
         {
@@ -127,8 +125,6 @@ public class SocialMediaController {
         
     }
     private void getMessagefromUserHandler(Context context) throws JsonMappingException, JsonProcessingException {
-        //ObjectMapper mapper = new ObjectMapper();
-        //Message message = mapper.readValue(context.body(), Message.class);
         List<Message> foundMessage = messageService.getMessagebyUserID(Integer.parseInt(context.pathParam("account_id")));
         if(foundMessage != null)
         {

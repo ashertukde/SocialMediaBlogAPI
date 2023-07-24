@@ -44,23 +44,7 @@ public class MessageService {
     }
     public Message getMessagebyID(int id)
     {
-        //Message message = messageDAO.getMessagebyID(id);
-        List<Message> messages = this.getAllMessages();
-        Message message = new Message();
-        boolean result = false;
-        for(int i = 0; i < messages.size(); i++)
-        {
-            if(messages.get(i).getMessage_id() == id)
-            {
-                message = messages.get(i);
-                result = true;
-                break;
-            }
-        }
-        if(!result)
-        {
-            return null;
-        }
+        Message message = messageDAO.getMessagebyID(id);
         return message;
     }
     public Message deleteMessagebyID(int id)
